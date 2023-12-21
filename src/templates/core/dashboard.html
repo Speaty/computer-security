@@ -1,0 +1,94 @@
+{% extends "_base.html" %}
+{% block content %}
+
+<main>
+<div>
+    <h1 class="text-center">Evaluation Dashboard</h1>
+    <p class="text-center">Welcome {{current_user.name}}! Use the form below to request an evaluation.</p>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                {% if user_submissions %}
+                    <div id="previous-uploads">
+                        {% for submission in user_submissions %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="{{ url_for('static', filename='uploads/' + submission.filename) }}" alt="Thumbnail" class="card-img">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-text">
+                                                <h5 class="card-title">{{ submission.subject }}</h5>
+                                                <p>{{ submission.submission }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                <div class="alert alert-info" role="alert">
+                    No previous uploads.
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-6">
+                <form action="{{ url_for('core.submission') }}" method="post" enctype="multipart/form-data">
+
+                    <div class="form-floating">
+                        {{ form.subject(placeholder="Subject", class="form-control mb-2") }}
+                        {{ form.subject.label }}
+                          {% if form.subject.errors %}
+                            {% for error in form.subject.errors %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                      </div>
+                      <div class="form-floating">
+                        {{ form.contact_option(placeholder="contact option", class="form-control mb-2") }}
+                        {{ form.contact_option.label }}
+                          {% if form.contact_option.errors %}
+                            {% for error in form.contact_option.errors %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                      </div>
+                      <div class="form-floating">
+                        {{ form.submission(placeholder="description", class="form-control mb-2") }}
+                        {{ form.submission.label }}
+                          {% if form.submission.errors %}
+                            {% for error in form.submission.errors %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                      </div>
+                      <div class="form-control-file">
+                        {{ form.image(placeholder="upload image", class="form-control mb-2") }}
+                        <!-- {{ form.image.label }} -->
+                          {% if form.image.errors %}
+                            {% for error in form.image.errors %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ error }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                      </div>
+
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</main>
+{% endblock %}

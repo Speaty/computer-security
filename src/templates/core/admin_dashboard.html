@@ -1,0 +1,43 @@
+
+{% extends "_base.html" %}
+{% block content %}
+
+
+<div class="container mt-5">
+    <div class="row">
+        {% for submission in user_submissions %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{ url_for('static', filename='uploads/' + submission.filename) }}" alt="Thumbnail" class="card-img">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-text">
+                            <h5 class="card-title">{{ submission.subject }}</h5>
+                            <p> {{ submission.created_on }}</p>
+                            {% if submission.contact == 'phone' %}
+                            <p>
+                                <a href="tel:{{ submission.user_phone }}">
+                                    Call
+                                </a>
+                            <p>
+                            {% endif %}
+                            {% if submission.contact == 'email' %}
+                                <a href="mailto:{{ submission.user_email }}?subject={{ submission.subject }}">
+                                    Send Email
+                                </a>
+                            </p>
+                            {% endif %}
+                            <p>{{ submission.user_name}}</p>
+                            <p>{{ submission.content }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

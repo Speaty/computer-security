@@ -1,0 +1,16 @@
+{% extends "_base.html"%}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <main class="form-signin w-100 m-auto">
+        <p class="text-center mt-3">Change your password: <a href="{{ url_for('accounts.change_password') }}">Change Password</a></p>
+
+      </main>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+
+{% endblock %}
